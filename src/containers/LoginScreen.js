@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, object, bool } from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -13,7 +13,7 @@ const LoginScreen = ({ navigator, login, authenticated }) => {
       title: 'Home',
       backButtonHidden: true
     });
-  }    
+  }
 
   return (
     <View style={styles.container}>
@@ -26,7 +26,9 @@ const LoginScreen = ({ navigator, login, authenticated }) => {
 };
 
 LoginScreen.propTypes = {
-  login: func.isRequired
+  login: func.isRequired,
+  navigator: object.isRequired,
+  authenticated: bool.isRequired
 };
 
 const mapState = state => ({

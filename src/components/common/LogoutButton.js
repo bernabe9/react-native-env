@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import { object, bool, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from 'react-native';
 
 import { logout } from '../../actions/userActions';
 
 class LogoutButton extends Component {
+  propTypes = {
+    authenticated: bool.isRequired,
+    navigator: object.isRequired,
+    logout: func.isRequired
+  }
+
   componentWillReceiveProps(nextProps) {
     const { authenticated, navigator } = this.props;
     if (nextProps.authenticated !== authenticated) {
@@ -24,7 +31,7 @@ class LogoutButton extends Component {
         onPress={logout}
         title="Logout"
       />
-    )
+    );
   }
 }
 

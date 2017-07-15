@@ -12,39 +12,39 @@ const store = configureStore(Immutable.Map());
 registerScreens(store, Provider);
 
 class App {
-	constructor() {
-		sessionService.initSessionService(store);
+  constructor() {
+    sessionService.initSessionService(store);
 
-		const unsubscribe = store.subscribe(() => {
-			const session = store.getState().get('session');
-			const checked = session.get('sessionChecked');
-			const authenticated = session.get('authenticated');
-			if (checked) {
-				this.startApp(authenticated);
-				unsubscribe();
-			}
-		});
-	}
+    const unsubscribe = store.subscribe(() => {
+      const session = store.getState().get('session');
+      const checked = session.get('sessionChecked');
+      const authenticated = session.get('authenticated');
+      if (checked) {
+        this.startApp(authenticated);
+        unsubscribe();
+      }
+    });
+  }
 
-	startApp(authenticated) {
-		if (authenticated) {
-			Navigation.startSingleScreenApp({
-				screen: {
-					screen: 'example.HomeScreen',
-					title: 'Home',
-					navigatorStyle: {}
-				}
-			});
-		} else {
-			Navigation.startSingleScreenApp({
-				screen: {
-					screen: 'example.LoginScreen',
-					title: 'Login',
-					navigatorStyle: {}
-				}
-			});
-		}
-	}
+  startApp(authenticated) {
+    if (authenticated) {
+      Navigation.startSingleScreenApp({
+        screen: {
+          screen: 'example.HomeScreen',
+          title: 'Home',
+          navigatorStyle: {}
+        }
+      });
+    } else {
+      Navigation.startSingleScreenApp({
+        screen: {
+          screen: 'example.LoginScreen',
+          title: 'Login',
+          navigatorStyle: {}
+        }
+      });
+    }
+  }
 }
 
 export default App;
