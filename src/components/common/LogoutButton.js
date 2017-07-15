@@ -6,7 +6,7 @@ import { Button } from 'react-native';
 import { logout } from '../../actions/userActions';
 
 class LogoutButton extends Component {
-  propTypes = {
+  static propTypes = {
     authenticated: bool.isRequired,
     navigator: object.isRequired,
     logout: func.isRequired
@@ -15,7 +15,7 @@ class LogoutButton extends Component {
   componentWillReceiveProps(nextProps) {
     const { authenticated, navigator } = this.props;
     if (nextProps.authenticated !== authenticated) {
-      navigator.push({
+      navigator.resetTo({
         screen: 'example.LoginScreen',
         title: 'Login',
         backButtonHidden: true

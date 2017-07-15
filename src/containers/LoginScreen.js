@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { func, object, bool } from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -6,24 +6,31 @@ import { connect } from 'react-redux';
 import LoginForm from '../components/user/LoginForm';
 import { login } from '../actions/userActions';
 
-const LoginScreen = ({ navigator, login, authenticated }) => {
-  if (authenticated) {
-    navigator.push({
-      screen: 'example.HomeScreen',
-      title: 'Home',
-      backButtonHidden: true
-    });
+class LoginScreen extends Component {
+  componentWillReceiveProps(nextProps) {
+    const { authenticated, navigator } = this.props;
+    if (nextProps.authenticated && !authenticated) {
+      navigator.resetTo({
+        screen: 'example.HomeScreen',
+        title: 'Home',
+        backButtonHidden: true
+      });
+    }
   }
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>
-        LOGIN
-      </Text>
-      <LoginForm onSubmit={user => login(user.toJS())} />
-    </View>
-  );
-};
+  render() {
+    const { login } = this.props;
+
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          LOGIN
+        </Text>
+        <LoginForm onSubmit={user => login(user.toJS())} />
+      </View>
+    )
+  }
+}
 
 LoginScreen.propTypes = {
   login: func.isRequired,
