@@ -13,17 +13,27 @@ registerScreens(store, Provider);
 
 class App {
   constructor() {
+    this.appInitialized = false;
+    this.authenticated = false;
     sessionService.initSessionService(store);
 
-    const unsubscribe = store.subscribe(() => {
-      const session = store.getState().get('session');
+    store.subscribe(this.onStoreUpdate.bind(this));
+  }
+
+  onStoreUpdate() {
+    const session = store.getState().get('session');
+    const authenticated = session.get('authenticated');
+    if (!this.appInitialized) {
       const checked = session.get('sessionChecked');
-      const authenticated = session.get('authenticated');
       if (checked) {
+        this.appInitialized = true;
+        this.authenticated = authenticated;
         this.startApp(authenticated);
-        unsubscribe();
       }
-    });
+    } else if (this.authenticated !== authenticated) {
+      this.authenticated = authenticated;
+      this.startApp(authenticated);
+    }
   }
 
   startApp(authenticated) {
@@ -32,7 +42,15 @@ class App {
         screen: {
           screen: 'example.HomeScreen',
           title: 'Home',
-          navigatorStyle: {}
+          navigatorStyle: {},
+          leftButtons: [{
+            id: 'sideMenu'
+          }]
+        },
+        drawer: {
+          left: {
+            screen: 'example.Drawer'
+          }
         }
       });
     } else {
