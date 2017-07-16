@@ -3,16 +3,20 @@ import humps from 'humps';
 
 import { API_URL } from '../constants/config';
 
-const saveSessionHeaders = (headers) => {
-  if (headers.get('access-token')) {
-    const sessionHeaders = {
-      token: headers.get('access-token'),
-      uid: headers.get('uid'),
-      client: headers.get('client')
-    };
-    sessionService.saveSession(sessionHeaders);
-  }
-};
+const saveSessionHeaders = headers =>
+  new Promise((resolve) => {
+    if (headers.get('access-token')) {
+      const sessionHeaders = {
+        token: headers.get('access-token'),
+        uid: headers.get('uid'),
+        client: headers.get('client')
+      };
+      sessionService.saveSession(sessionHeaders)
+      .then(() => resolve());
+    } else {
+      resolve();
+    }
+  });
 
 const handleErrors = response =>
   new Promise((resolve, reject) => {
@@ -22,8 +26,8 @@ const handleErrors = response =>
     }
 
     if (response.ok) {
-      saveSessionHeaders(response.headers);
-      resolve(response);
+      saveSessionHeaders(response.headers)
+      .then(() => resolve(response));
       return;
     }
 
@@ -32,7 +36,7 @@ const handleErrors = response =>
       if (response.status === 401) {
         sessionService.deleteSession();
       }
-    });
+    }).catch(() => {});
 
     response.json()
       .then((json) => {

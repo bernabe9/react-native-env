@@ -1,17 +1,22 @@
 import React from 'react';
 import { func, string } from 'prop-types';
 import { Field, reduxForm } from 'redux-form/immutable';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet
+} from 'react-native';
 
 import Input from '../common/Input';
 import * as constraints from '../../utils/constraints';
 
-const LoginForm = ({ handleSubmit, error }) => (
+const LoginForm = ({ handleSubmit }) => (
   <View style={styles.login} onSubmit={handleSubmit}>
-    {error && <Text>{error}</Text>}
     <Field
       name="email"
       label="Email"
+      keyboardType="email-address"
       component={Input}
     />
     <Field
@@ -25,8 +30,7 @@ const LoginForm = ({ handleSubmit, error }) => (
 );
 
 LoginForm.propTypes = {
-  handleSubmit: func.isRequired,
-  error: string
+  handleSubmit: func.isRequired
 };
 
 const styles = StyleSheet.create({
