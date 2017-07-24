@@ -3609,6 +3609,10 @@ react-devtools-core@2.3.1:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-native-config@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-0.5.0.tgz#109aaee511b81851b22e1fd3372d86c9d6c797d4"
+
 react-native-navigation@^1.1.134:
   version "1.1.134"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.134.tgz#1ede9ea29f2f52159f95cfb5255b40822d6e51a0"

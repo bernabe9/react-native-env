@@ -1,7 +1,7 @@
 import { sessionService } from 'redux-react-native-session';
 import humps from 'humps';
 
-import { API_URL } from '../constants/config';
+import Config from 'react-native-config';
 
 const saveSessionHeaders = headers =>
   new Promise((resolve) => {
@@ -79,7 +79,7 @@ class Api {
     });
   }
 
-  static get(uri, apiUrl = API_URL) {
+  static get(uri, apiUrl = Config.API_URL) {
     const requestData = {
       method: 'get',
       headers: {
@@ -93,7 +93,7 @@ class Api {
     }).catch(() => Api.performRequest(uri, apiUrl, requestData));
   }
 
-  static post(uri, data, apiUrl = API_URL) {
+  static post(uri, data, apiUrl = Config.API_URL) {
     const decamelizeData = humps.decamelizeKeys(data);
     const requestData = {
       method: 'post',
@@ -110,7 +110,7 @@ class Api {
     }).catch(() => Api.performRequest(uri, apiUrl, requestData));
   }
 
-  static delete(uri, data, apiUrl = API_URL) {
+  static delete(uri, data, apiUrl = Config.API_URL) {
     const decamelizeData = humps.decamelizeKeys(data);
     const requestData = {
       method: 'delete',
@@ -127,7 +127,7 @@ class Api {
     }).catch(() => Api.performRequest(uri, apiUrl, requestData));
   }
 
-  static put(uri, data, apiUrl = API_URL) {
+  static put(uri, data, apiUrl = Config.API_URL) {
     const decamelizeData = humps.decamelizeKeys(data);
     const requestData = {
       method: 'put',
@@ -144,7 +144,7 @@ class Api {
     }).catch(() => Api.performRequest(uri, apiUrl, requestData));
   }
 
-  static patch(uri, data, apiUrl = API_URL) {
+  static patch(uri, data, apiUrl = Config.API_URL) {
     const decamelizeData = humps.decamelizeKeys(data);
     const requestData = {
       method: 'patch',
